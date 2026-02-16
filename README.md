@@ -19,7 +19,7 @@ A high-performance, secure Spring Boot REST API designed to manage credit card i
 ## 🛠️ Tech Stack
 
 - **Java 21**
-- **Spring Boot 3.2+** (Web, Security, Data JPA, Actuator)
+- **Spring Boot 4.0** (Web, Security, Data JPA, Actuator)
 - **MySQL 8.0**
 - **Docker & Docker Compose**
 - **Micrometer Tracing** (OpenTelemetry bridge)
