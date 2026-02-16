@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: card-manager
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/card_db?createDatabaseIfNotExist=true&rewriteBatchedStatements=true}
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+api:
+  security:
+    secret: ${SECRET-TOKEN:secret-test}
+    salt: ${SALT:salt-test}
+
+
+server:
+  port: ${SERVER_PORT:8443}
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore.p12
+    key-store-password: ${KEY_STORE_PASSWORD:test-cardmanager}
+    key-alias: cardmanager
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+logging:
+  pattern:
+    # This pattern adds [TraceID, SpanID] to your console logs
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+  level:
+    br.com.cardmanager: INFO
+    org.springframework.web.filter.CommonsRequestLoggingFilter: INFO

@@ -1,0 +1,44 @@
+services:
+  app:
+    build: .
+    container_name: card-manager-app
+    ports:
+      - "8443:8443"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/card_db?createDatabaseIfNotExist=true&rewriteBatchedStatements=true
+      - SECRET-TOKEN=strongJWTSecret
+      - SALT=randomSalt
+      - KEY_STORE_PASSWORD=123456
+    networks:
+      - card-network
+
+  mysql:
+    image: 'mysql:8.0'
+    container_name: card-manager-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: card_db
+      MYSQL_USER: user
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - card-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uuser", "-ppassword"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+networks:
+  card-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
