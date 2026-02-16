@@ -10,7 +10,7 @@ A high-performance, secure Spring Boot REST API designed to manage credit card i
     - **AES Encryption:** Sensitive data is encrypted before storage (optional implementation ready).
     - **JWT Authentication:** Stateless authentication with `HmacSHA256`.
 - **High Performance:**
-    - **Bulk Inserts:** Uses JDBC Template with `rewriteBatchedStatements=true` to handle massive file imports efficiently.
+    - **Bulk Inserts:** Uses with `rewriteBatchedStatements=true` to handle massive file imports efficiently.
     - **Async Logging:** Integrated with OpenTelemetry for tracing.
 - **Dockerized:**
     - Multi-stage Docker build that generates SSL certificates and packages the application.
